@@ -35,8 +35,12 @@ export class ProductsService {
   }
 
   remove(id: string) {
-    return this.prismaService.product.delete({
+    const deleteProduct = this.prismaService.product.delete({
       where: { id },
     });
+    if (!deleteProduct) {
+      throw new NotFoundException(`Product with ID ${id} not found.`);
+    }
+    return deleteProduct;
   }
 }
