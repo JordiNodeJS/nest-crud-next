@@ -17,9 +17,9 @@ export class ProductsService {
     return this.prismaService.product.findMany();
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return this.prismaService.product.findUnique({
-      where: { id: id.toString() },
+      where: { id },
     });
   }
 
