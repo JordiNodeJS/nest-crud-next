@@ -42,3 +42,10 @@ Para más información sobre las diferencias entre `@default(autoincrement())` y
 ## Crear tabla con Prisma
 
 Para crear una nueva tabla en la base de datos utilizando el esquema de Prisma, consulta [esta guía](docs/crear-tabla-prisma.md).
+
+## Documentación
+
+- [Guía para añadir nuevas entidades con CRUD completo](./docs/adding-new-entity.md)
+- [Diferencias entre TypeORM y Prisma](./docs/typeorm-vs-prisma.md)
+- [Diferencias entre @default(autoincrement()) y @default(cuid()) en Prisma](./docs/prisma-id-differences.md)
+- [Crear tabla con Prisma](./docs/crear-tabla-prisma.md)
