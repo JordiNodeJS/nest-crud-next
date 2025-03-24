@@ -15,3 +15,7 @@ Para levantar la base de datos con Docker Compose, sigue estos pasos:
    ```
 
 3. La base de datos estará disponible en `localhost` en el puerto `5432`.
+
+## Diferencias entre `@default(autoincrement())` y `@default(cuid())` en Prisma
+
+Para más información sobre las diferencias entre `@default(autoincrement())` y `@default(cuid())` en Prisma, consulta [este documento](docs/prisma-id-differences.md).
