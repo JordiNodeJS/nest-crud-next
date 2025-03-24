@@ -1,3 +1,4 @@
+import { Prisma } from '@prisma/client';
 import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -8,22 +9,15 @@ export class ProductsService {
   constructor(private readonly prismaService: PrismaService) {}
 
   async create(createProductDto: CreateProductDto) {
-    // Check if product with the same name already exists
-    const existingProduct = await this.prismaService.product.findUnique({
-      where: { name: createProductDto.name },
-    });
-
-    if (existingProduct) {
-      throw new ConflictException(`Product with name "${createProductDto.name}" already exists`);
-    }
-
     try {
       return await this.prismaService.product.create({
         data: createProductDto,
       });
     } catch (error) {
-      if (error.code === 'P2002' && error.meta?.target?.includes('name')) {
-        throw new ConflictException(`Product with name "${createProductDto.name}" already exists`);
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        if (error.code === 'P2002' && (error.meta?.target as string[])?.includes('name')) {
+          throw new ConflictException(`Product with name "${createProductDto.name}" already exists`);
+        }
       }
       throw error;
     }
