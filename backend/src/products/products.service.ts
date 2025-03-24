@@ -8,11 +8,9 @@ export class ProductsService {
   constructor(private readonly prismaService: PrismaService) {}
 
   create(createProductDto: CreateProductDto) {
-    this.prismaService.product.create({
+    return this.prismaService.product.create({
       data: createProductDto,
     });
-
-    return createProductDto;
   }
 
   findAll() {
@@ -20,11 +18,16 @@ export class ProductsService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} product`;
+    return this.prismaService.product.findUnique({
+      where: { id: id.toString() },
+    });
   }
 
   update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+    return this.prismaService.product.update({
+      where: { id: id.toString() },
+      data: updateProductDto,
+    });
   }
 
   remove(id: number) {
