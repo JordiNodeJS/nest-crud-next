@@ -49,3 +49,4 @@ Para crear una nueva tabla en la base de datos utilizando el esquema de Prisma, 
 - [Diferencias entre TypeORM y Prisma](./docs/typeorm-vs-prisma.md)
 - [Diferencias entre @default(autoincrement()) y @default(cuid()) en Prisma](./docs/prisma-id-differences.md)
 - [Crear tabla con Prisma](./docs/crear-tabla-prisma.md)
+- [Uso del Patrón Repositorio con Prisma](./docs/prisma-repository-pattern.md)
