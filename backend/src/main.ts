@@ -15,6 +15,9 @@ async function bootstrap() {
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory);
 
+  // Enable CORS
+  app.enableCors();
+
   await app.listen(process.env.PORT ?? 3100);
 
   // Captura la señal de terminación y cierra la aplicación
