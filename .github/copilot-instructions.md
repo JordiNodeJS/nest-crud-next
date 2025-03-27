@@ -1,4 +1,4 @@
-# GitHub Copilot Instructions for NestJS-Next.js Monorepo
+ch# GitHub Copilot Instructions for NestJS-Next.js Monorepo
 
 ## Project Structure
 
