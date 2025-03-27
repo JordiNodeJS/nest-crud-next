@@ -22,5 +22,7 @@
     ],
     "editor.quickSuggestions": {
         "strings": true
-    }
+    },
+    "css.validate": false,
+    "scss.validate": false
 }
