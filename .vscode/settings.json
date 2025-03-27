@@ -1,0 +1,26 @@
+{
+    "tailwindCSS.experimental.classRegex": [
+        // Captura clases en cva base
+        [
+            "cva\\(([^)]*)\\)",
+            "[\"'`]([^\"'`]*).*?[\"'`]"
+        ],
+        // Captura clases en variantes específicas
+        [
+            "variant:\\s*{([^}]*)}",
+            "[\"'`]([^\"'`]*).*?[\"'`]"
+        ],
+        // Captura para otros patrones comunes en CVA
+        [
+            "([^\\s:]*:)\\s*[\"'`]([^\"'`]*).*?[\"'`]",
+            "\\2"
+        ],
+        // Captura genérica para strings que contienen clases
+        [
+            "[\"'`]([^\"'`]*).*?[\"'`]"
+        ]
+    ],
+    "editor.quickSuggestions": {
+        "strings": true
+    }
+}
