@@ -23,6 +23,6 @@
     "editor.quickSuggestions": {
         "strings": true
     },
-    "css.validate": false,
-    "scss.validate": false
+    "css.validate": true,
+    "scss.validate": true
 }
