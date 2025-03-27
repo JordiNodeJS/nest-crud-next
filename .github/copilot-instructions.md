@@ -25,7 +25,7 @@ The backend is built with NestJS and has the following characteristics:
 The frontend is built with Next.js and has the following characteristics:
 
 - React-based components
-- Pages are in `frontend/pages/`
+- Uses the App Router structure with pages in `frontend/app/`
 - API calls to the backend
 - Components are stored in `frontend/components/`
 - State management (specify which library if applicable)
@@ -61,9 +61,9 @@ The frontend is built with Next.js and has the following characteristics:
 
 - Creating a new page:
 
-  1. Add new file in `frontend/pages/`
+  1. Add new file as `page.tsx` in a new directory under `frontend/app/`
   2. Import necessary components
-  3. Set up data fetching if needed
+  3. Set up data fetching using App Router data fetching methods
 
 - Starting the development server:
   ```
