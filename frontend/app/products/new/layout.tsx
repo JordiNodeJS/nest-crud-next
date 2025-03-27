@@ -11,7 +11,9 @@ export default function NewProductLayout({
         <h1 className="text-2xl font-bold">Create New Product</h1>
         <p className="text-gray-600">Add a new product to the catalog</p>
       </div>
-      <div className="bg-white shadow-sm rounded-lg p-6">{children}</div>
+      <article className="flex justify-center bg-stone-300/20 shadow-sm rounded-lg p-6">
+        {children}
+      </article>
     </div>
   );
 }
