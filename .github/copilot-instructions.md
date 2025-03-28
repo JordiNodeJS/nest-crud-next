@@ -1,4 +1,4 @@
-ch# GitHub Copilot Instructions for NestJS-Next.js Monorepo
+# GitHub Copilot Instructions for NestJS-Next.js
 
 ## Project Structure
 
@@ -6,6 +6,11 @@ This is a monorepo containing:
 
 - `backend/`: NestJS application connected to PostgreSQL
 - `frontend/`: Next.js application
+
+> **Note**: For detailed best practices, see:
+>
+> - [NestJS Best Practices](./prompts/nestjs-best-practices.prompt.md)
+> - [Next.js 15 Best Practices](./prompts/nextjs15-best-practices.prompt.md)
 
 ## Backend (NestJS)
 

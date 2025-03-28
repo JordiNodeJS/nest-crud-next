@@ -27,6 +27,32 @@ This guide outlines best practices for developing the Next.js frontend in this m
   - When using event listeners
 - Keep client component bundles small
 
+## Inports
+
+La importación de un typo de React debe seguir estas reglas:
+Ejemplo:
+en vez de:
+
+```typescript
+interface FormProps {
+  onSubmit: (data: ProductFormData) => void;
+  onCancel?: () => void;
+  formRef?: React.RefObject<HTMLFormElement>;
+}
+```
+
+Debe ser:
+
+```typescript
+import type { RefObject } from "react";
+...
+interface FormProps {
+  ...
+  formRef?: RefObject<HTMLFormElement>;
+}
+
+```
+
 ## Data Fetching
 
 ### Server-Side Data Fetching
