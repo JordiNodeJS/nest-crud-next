@@ -35,28 +35,51 @@ export async function getProducts() {
  */
 export async function getProduct(id: string) {
   try {
+    console.log(`Fetching product with ID: ${id}`);
+
     const res = await fetch(`${API_BASE_URL}/products/${id}`, {
-      cache: "no-store",
-      next: {
-        revalidate: 0,
+      method: "GET",
+      headers: {
+        Accept: "application/json",
       },
+      cache: "no-store",
     });
 
+    console.log(
+      `Response status: ${res.status}, Content-Length: ${res.headers.get(
+        "content-length"
+      )}`
+    );
+
     if (!res.ok) {
-      console.error(`Error fetching product ${id}: HTTP ${res.status}`);
+      console.error(`Error HTTP: ${res.status} al obtener producto ${id}`);
       return null;
     }
 
-    // Manejo seguro de la respuesta JSON
+    // Detectamos explícitamente contenido vacío mediante el header Content-Length
+    if (res.headers.get("content-length") === "0") {
+      console.warn(`Producto ${id} no encontrado (respuesta vacía)`);
+      return null;
+    }
+
+    // Para evitar problemas de JSON vacío o inválido
+    const responseText = await res.text();
+
+    if (!responseText || responseText.trim() === "") {
+      console.warn(`Producto ${id} respuesta vacía`);
+      return null;
+    }
+
     try {
-      const data = await res.json();
-      return data;
+      // Parseamos el JSON con manejo de errores
+      return JSON.parse(responseText);
     } catch (parseError) {
-      console.error(`Error parsing JSON for product ${id}:`, parseError);
+      console.error(`Error parseando JSON para producto ${id}:`, parseError);
+      console.error(`JSON inválido: ${responseText.substring(0, 100)}`);
       return null;
     }
   } catch (error) {
-    console.error(`Error fetching product ${id}:`, error);
+    console.error(`Error al obtener el producto ${id}:`, error);
     return null;
   }
 }
@@ -125,7 +148,7 @@ export async function deleteProduct(id: string) {
       throw new Error(`Failed to delete product: ${res.status} - ${errorText}`);
     }
 
-    return true;
+    return await res.json();
   } catch (error) {
     console.error(`Error deleting product ${id}:`, error);
     throw error;

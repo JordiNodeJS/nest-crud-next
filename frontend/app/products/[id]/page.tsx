@@ -3,7 +3,7 @@ import { Product } from "@/types";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { DeleteProductButton } from "./delete-button";
-import { notFound } from "next/navigation";
+// No importamos notFound para evitar la redirección automática a la página 404
 
 export default async function ProductDetailPage({
   params,
@@ -13,9 +13,27 @@ export default async function ProductDetailPage({
   try {
     const product: Product | null = await getProduct(params.id);
 
-    // Si no se encuentra el producto, mostrar una página 404
+    // Si no se encuentra el producto, mostramos un mensaje amigable
+    // en lugar de llamar a notFound()
     if (!product) {
-      notFound();
+      return (
+        <div className="container mx-auto px-4 py-12">
+          <div className="max-w-lg mx-auto bg-white rounded-lg shadow-md p-8 text-center">
+            <h1 className="text-3xl font-bold text-gray-800 mb-4">
+              Producto no encontrado
+            </h1>
+            <p className="text-gray-600 mb-6">
+              Lo sentimos, el producto que estás buscando no existe o ha sido
+              eliminado.
+            </p>
+            <div className="flex justify-center">
+              <Link href="/products">
+                <Button>Volver al catálogo de productos</Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      );
     }
 
     return (
@@ -39,7 +57,9 @@ export default async function ProductDetailPage({
 
           <div>
             <h1 className="text-3xl font-bold mb-2">{product.name}</h1>
-            <p className="text-gray-600 mb-6">{product.description}</p>
+            <p className="text-gray-600 mb-6">
+              {product.description || "Sin descripción"}
+            </p>
 
             <div className="mb-6">
               <p className="text-2xl font-bold text-blue-600">

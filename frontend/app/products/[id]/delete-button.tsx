@@ -21,13 +21,18 @@ export function DeleteProductButton({ productId }: DeleteProductButtonProps) {
         setError(null);
         startTransition(async () => {
           try {
-            // La acción del servidor maneja la redirección
-            await deleteProductAction(productId);
+            // Llamamos a la acción del servidor y recibimos su resultado
+            const result = await deleteProductAction(productId);
 
-            // Como respaldo, si por alguna razón la redirección del server action no funciona,
-            // hacemos una redirección desde el cliente también
-            router.push("/products");
-            router.refresh();
+            // Si la operación fue exitosa, redirigimos al usuario
+            if (result?.success && result?.redirectTo) {
+              router.push(result.redirectTo);
+              router.refresh();
+            } else {
+              // En caso contrario, solo actualizamos la página
+              router.push("/products");
+              router.refresh();
+            }
           } catch (err: any) {
             setError(err.message || "Error al eliminar el producto");
           }

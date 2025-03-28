@@ -17,8 +17,8 @@ export async function deleteProductAction(productId: string) {
     // Revalida la ruta de productos para refrescar la caché
     revalidatePath("/products");
 
-    // Redirige al usuario a la lista de productos
-    redirect("/products");
+    // Indicamos que la operación fue exitosa
+    return { success: true, redirectTo: "/products" };
   } catch (error) {
     // Registra el error para depuración del servidor
     console.error("Error en deleteProductAction:", error);
