@@ -161,7 +161,7 @@ export default function EditProduct({
               <Input id="image" {...register("image")} className="w-full" />
             </div>
           </CardContent>
-          <CardFooter className="flex justify-between">
+          <CardFooter className="flex justify-between mt-6">
             <Button
               type="button"
               variant="outline"
