@@ -7,6 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Product } from "@/types";
+import Link from "next/link";
 
 interface ProductCardProps {
   product: Product;
@@ -28,9 +29,11 @@ export function ProductCard({ product }: ProductCardProps) {
         <p className="text-lg font-bold mt-2">${product.price}</p>
       </CardContent>
       <CardFooter>
-        <button className="bg-blue-500 hover:bg-blue-600 transition-colors text-white py-2 px-4 rounded w-full">
-          View Details
-        </button>
+        <Link href={`/products/${product.id}`} className="w-full">
+          <button className="bg-blue-500 hover:bg-blue-600 transition-colors text-white py-2 px-4 rounded w-full">
+            View Details
+          </button>
+        </Link>
       </CardFooter>
     </Card>
   );

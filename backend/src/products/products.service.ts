@@ -59,8 +59,10 @@ export class ProductsService {
       throw new NotFoundException(`Product with ID ${id} not found.`);
     }
 
-    return this.prismaService.product.delete({
+    const productDeleted = this.prismaService.product.delete({
       where: { id },
     });
+    console.log('productDeleted', JSON.stringify(productDeleted));
+    return productDeleted;
   }
 }
