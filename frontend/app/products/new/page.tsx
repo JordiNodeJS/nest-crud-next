@@ -38,7 +38,8 @@ function ProductsNewPage() {
   const onSubmit: SubmitHandler<Product> = async (data: Product) => {
     console.log(data);
     await createProduct(data);
-    router.push("/");
+    router.push("/products");
+    // router.refresh();
   };
 
   return (
