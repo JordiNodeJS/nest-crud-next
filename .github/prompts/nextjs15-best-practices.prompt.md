@@ -27,13 +27,18 @@ This guide outlines best practices for developing the Next.js frontend in this m
   - When using event listeners
 - Keep client component bundles small
 
-## Inports
+## Type Imports
 
-La importación de un typo de React debe seguir estas reglas:
-Ejemplo:
-en vez de:
+When importing React types, follow these best practices:
+
+- Always use explicit, named type imports from React
+- Import types using the `import type` syntax to improve tree-shaking
+- Avoid using the React namespace (React.X) for types
+
+### Example of Incorrect Usage:
 
 ```typescript
+// ❌ Avoid using React namespace for types
 interface FormProps {
   onSubmit: (data: ProductFormData) => void;
   onCancel?: () => void;
@@ -41,17 +46,20 @@ interface FormProps {
 }
 ```
 
-Debe ser:
+### Example of Correct Usage:
 
 ```typescript
+// ✅ Use explicit named type imports
 import type { RefObject } from "react";
-...
+
 interface FormProps {
-  ...
+  onSubmit: (data: ProductFormData) => void;
+  onCancel?: () => void;
   formRef?: RefObject<HTMLFormElement>;
 }
-
 ```
+
+This practice improves code readability, maintainability, and helps with optimized builds through proper tree-shaking of type imports.
 
 ## Data Fetching
 
