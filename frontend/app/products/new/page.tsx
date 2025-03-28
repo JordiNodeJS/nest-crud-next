@@ -11,12 +11,8 @@ import { Label } from "@radix-ui/react-label";
 import { Input } from "@/components/ui/input";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-interface Product {
-  name: string;
-  description: string;
-  price: number;
-  image: string;
-}
+import { createProduct } from "../product.api";
+import { Product } from "@/types";
 
 interface Props {
   params: {
@@ -24,9 +20,9 @@ interface Props {
   };
 }
 
-function ProductsNewPage({ params }: Props) {
+function ProductsNewPage() {
   const product: Product | null = null; // await getProduct(params.id);
-  const { id } = params;
+
   const { register, handleSubmit } = useForm<Product>({
     defaultValues: product || {
       name: "",
@@ -38,7 +34,8 @@ function ProductsNewPage({ params }: Props) {
 
   const onSubmit: SubmitHandler<Product> = async (data: Product) => {
     console.log(data);
-    // await createProduct(data);
+
+    await createProduct(data);
   };
 
   return (
@@ -48,7 +45,7 @@ function ProductsNewPage({ params }: Props) {
     >
       <Card>
         <CardHeader>
-          <CardTitle>{params.id ? "Edit Product" : "Create Product"}</CardTitle>
+          <CardTitle>Create Product</CardTitle>
         </CardHeader>
         <CardContent>
           <Label>Product Name</Label>

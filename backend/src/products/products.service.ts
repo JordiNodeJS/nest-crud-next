@@ -1,5 +1,5 @@
 import { Prisma } from '@prisma/client';
-import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
+import { Injectable, NotFoundException, ConflictException, InternalServerErrorException } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -19,7 +19,7 @@ export class ProductsService {
           throw new ConflictException(`Product with name "${createProductDto.name}" already exists`);
         }
       }
-      throw error;
+      throw new InternalServerErrorException('Error while creating product');
     }
   }
 
