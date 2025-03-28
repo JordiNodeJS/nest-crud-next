@@ -25,7 +25,7 @@ The backend is built with NestJS and has the following characteristics:
 - TypeORM is used for database interactions
 - Environment variables are stored in `.env` files
 
-## Frontend (Next.js)
+## Frontend (Next.js versión 15)
 
 The frontend is built with Next.js and has the following characteristics:
 

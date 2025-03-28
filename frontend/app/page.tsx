@@ -1,6 +1,5 @@
 import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
-import React from "react";
 
 function HomePage() {
   const variant = buttonVariants({ variant: "secondary", size: "lg" });
