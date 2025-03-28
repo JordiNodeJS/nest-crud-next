@@ -2,7 +2,9 @@ import { getProduct } from "../product.api";
 import { Product } from "@/types";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { DeleteProductButton } from "./delete-button";
+import { DeleteProductButton } from "./components/delete-button";
+import { Edit } from "lucide-react";
+import EditButton from "./components/edit-button";
 // No importamos notFound para evitar la redirección automática a la página 404
 
 export default async function ProductDetailPage({
@@ -85,7 +87,7 @@ export default async function ProductDetailPage({
             </section>
 
             <footer className="space-y-4">
-              <Button className="w-full">Añadir al Carrito</Button>
+              <EditButton productId={product.id} />
               <DeleteProductButton productId={product.id} />
             </footer>
           </section>

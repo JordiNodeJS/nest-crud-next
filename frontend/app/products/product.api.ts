@@ -117,6 +117,39 @@ export async function createProduct(data: Product) {
 }
 
 /**
+ * Función para actualizar un producto
+ */
+export async function updateProduct(data: Product) {
+  const productData = {
+    ...data,
+    price: parseFloat(data.price.toString()),
+  };
+
+  try {
+    const res = await fetch(`${API_BASE_URL}/products/${data.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(productData),
+      cache: "no-store",
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => ({}));
+      throw new Error(
+        `Failed to update product: ${res.status} ${JSON.stringify(errorData)}`
+      );
+    }
+
+    return res.json();
+  } catch (error) {
+    console.error(`Error updating product ${data.id}:`, error);
+    throw error;
+  }
+}
+
+/**
  * Función para eliminar un producto
  */
 export async function deleteProduct(id: string) {

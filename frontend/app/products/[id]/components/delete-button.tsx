@@ -1,10 +1,10 @@
 "use client";
 
-import React from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { deleteProductAction } from "./actions";
+import { deleteProductAction } from "../actions";
 
 interface DeleteProductButtonProps {
   productId: string;
@@ -13,7 +13,7 @@ interface DeleteProductButtonProps {
 export function DeleteProductButton({ productId }: DeleteProductButtonProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  const [error, setError] = React.useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const handleDelete = async () => {
     if (confirm("¿Está seguro que desea eliminar este producto?")) {
