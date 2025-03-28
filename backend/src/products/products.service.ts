@@ -1,12 +1,13 @@
 import { Prisma } from '@prisma/client';
 import { Injectable, NotFoundException, ConflictException, InternalServerErrorException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class ProductsService {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(private readonly prismaService: PrismaService, private readonly configService: ConfigService) {}
 
   async create(createProductDto: CreateProductDto) {
     try {
@@ -19,7 +20,12 @@ export class ProductsService {
           throw new ConflictException(`Product with name "${createProductDto.name}" already exists`);
         }
       }
-      throw new InternalServerErrorException('Error while creating product');
+
+      const isProd = this.configService.get('NODE_ENV') === 'production';
+      if (isProd) {
+        throw new InternalServerErrorException('Error while creating product');
+      }
+      throw error;
     }
   }
 
