@@ -13,6 +13,7 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { createProduct } from "../product.api";
 import { Product } from "@/types";
+import { useRouter } from "next/navigation";
 
 interface Props {
   params: {
@@ -21,6 +22,8 @@ interface Props {
 }
 
 function ProductsNewPage() {
+  const router = useRouter();
+
   const product: Product | null = null; // await getProduct(params.id);
 
   const { register, handleSubmit } = useForm<Product>({
@@ -34,8 +37,8 @@ function ProductsNewPage() {
 
   const onSubmit: SubmitHandler<Product> = async (data: Product) => {
     console.log(data);
-
     await createProduct(data);
+    router.push("/");
   };
 
   return (

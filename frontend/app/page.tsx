@@ -1,7 +1,7 @@
 import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 
-function HomePage() {
+async function HomePage() {
   const variant = buttonVariants({ variant: "secondary", size: "lg" });
   return (
     <>
@@ -11,6 +11,9 @@ function HomePage() {
       <main className="flex flex-col gap-2 items-center">
         <Link href="/products/new" className={variant}>
           Go to New Product
+        </Link>
+        <Link href="/products" className={variant}>
+          Go to Products
         </Link>
         <Button className="bg-pink-700 hover:bg-pink-800 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-colors">
           Botón
