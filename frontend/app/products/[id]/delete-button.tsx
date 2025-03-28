@@ -16,18 +16,25 @@ export function DeleteProductButton({ productId }: DeleteProductButtonProps) {
   const [error, setError] = React.useState<string | null>(null);
 
   const handleDelete = async () => {
-    try {
-      setError(null);
-      startTransition(async () => {
-        try {
-          await deleteProductAction(productId);
-          // La redirección la maneja el server action
-        } catch (err: any) {
-          setError(err.message || "Error al eliminar el producto");
-        }
-      });
-    } catch (err: any) {
-      setError(err.message || "Error al eliminar el producto");
+    if (confirm("¿Está seguro que desea eliminar este producto?")) {
+      try {
+        setError(null);
+        startTransition(async () => {
+          try {
+            // La acción del servidor maneja la redirección
+            await deleteProductAction(productId);
+
+            // Como respaldo, si por alguna razón la redirección del server action no funciona,
+            // hacemos una redirección desde el cliente también
+            router.push("/products");
+            router.refresh();
+          } catch (err: any) {
+            setError(err.message || "Error al eliminar el producto");
+          }
+        });
+      } catch (err: any) {
+        setError(err.message || "Error al eliminar el producto");
+      }
     }
   };
 
