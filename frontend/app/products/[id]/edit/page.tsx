@@ -13,18 +13,18 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Product } from "@/types";
 import { useRouter } from "next/navigation";
-import { useEffect, useState, use, Usable } from "react";
+import { useEffect, useState } from "react";
 import { getProduct } from "../../product.api";
 import { updateProductAction } from "../actions";
 
-export default function EditProduct({
-  params,
-}: {
-  params: Usable<{ id: string }>;
-}) {
-  // Unwrap params Promise using React.use()
-  const unwrappedParams = use(params);
-  const productId = unwrappedParams.id;
+type EditProductPageProps = {
+  params: {
+    id: string;
+  };
+};
+
+export default function EditProduct({ params }: EditProductPageProps) {
+  const productId = params.id;
 
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
