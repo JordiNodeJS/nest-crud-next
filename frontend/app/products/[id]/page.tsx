@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { DeleteProductButton } from "./components/delete-button";
 import EditButton from "./components/edit-button";
+import Image from "next/image";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -55,11 +56,14 @@ export default async function ProductDetailPage(props: Props) {
         </nav>
 
         <article className="bg-white rounded-lg shadow-md p-6 grid md:grid-cols-2 gap-8">
-          <figure className="flex items-center justify-center">
-            <img
+          <figure className="flex items-center justify-center relative h-[400px]">
+            <Image
               src={product.image}
               alt={`Fotografía de ${product.name}`}
-              className="max-h-96 object-contain bg-gray-50 p-4 rounded"
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-contain bg-gray-50 p-4 rounded"
+              priority
             />
           </figure>
 
@@ -91,7 +95,6 @@ export default async function ProductDetailPage(props: Props) {
       </main>
     );
   } catch (error) {
-    // Si ocurre cualquier error durante el renderizado, mostrar mensaje amigable
     console.error("Error rendering product page:", error);
 
     return (

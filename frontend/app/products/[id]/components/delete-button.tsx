@@ -33,12 +33,20 @@ export function DeleteProductButton({ productId }: DeleteProductButtonProps) {
               router.push("/products");
               router.refresh();
             }
-          } catch (err: any) {
-            setError(err.message || "Error al eliminar el producto");
+          } catch (err: unknown) {
+            // Manejar el error con tipado correcto
+            const errorMessage =
+              err instanceof Error
+                ? err.message
+                : "Error al eliminar el producto";
+            setError(errorMessage);
           }
         });
-      } catch (err: any) {
-        setError(err.message || "Error al eliminar el producto");
+      } catch (err: unknown) {
+        // Manejar el error con tipado correcto
+        const errorMessage =
+          err instanceof Error ? err.message : "Error al eliminar el producto";
+        setError(errorMessage);
       }
     }
   };

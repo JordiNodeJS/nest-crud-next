@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card";
 import { Product } from "@/types";
 import Link from "next/link";
+import Image from "next/image";
 
 interface ProductCardProps {
   product: Product;
@@ -21,11 +22,15 @@ export function ProductCard({ product }: ProductCardProps) {
         <CardDescription>{product.description}</CardDescription>
       </CardHeader>
       <CardContent className="flex-grow">
-        <img
-          src={product.image}
-          alt={product.name}
-          className="w-full h-48 object-contain rounded bg-gray-100"
-        />
+        <div className="relative w-full h-48">
+          <Image
+            src={product.image}
+            alt={product.name}
+            fill
+            sizes="(max-width: 768px) 100vw, 33vw"
+            className="object-contain rounded bg-gray-100"
+          />
+        </div>
         <p className="text-lg font-bold mt-2">${product.price}</p>
       </CardContent>
       <CardFooter>
