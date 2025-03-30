@@ -12,19 +12,14 @@ import { Input } from "@/components/ui/input";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Product } from "@/types";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getProduct } from "../../product.api";
 import { updateProductAction } from "../actions";
 
-type EditProductPageProps = {
-  params: {
-    id: string;
-  };
-};
-
-export default function EditProduct({ params }: EditProductPageProps) {
-  const productId = params.id;
+export default function EditProduct() {
+  const params = useParams();
+  const productId = params.id as string;
 
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);

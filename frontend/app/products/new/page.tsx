@@ -15,12 +15,6 @@ import { createProduct } from "../product.api";
 import { Product } from "@/types";
 import { useRouter } from "next/navigation";
 
-interface Props {
-  params: {
-    id: string;
-  };
-}
-
 function ProductsNewPage() {
   const router = useRouter();
 

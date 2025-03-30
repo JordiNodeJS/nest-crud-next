@@ -3,24 +3,20 @@ import { Product } from "@/types";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { DeleteProductButton } from "./components/delete-button";
-import { Edit } from "lucide-react";
 import EditButton from "./components/edit-button";
-// No importamos notFound para evitar la redirección automática a la página 404
 
-export default async function ProductDetailPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+type Props = {
+  params: Promise<{ id: string }>;
+};
+
+export default async function ProductDetailPage(props: Props) {
   try {
-    // Await the id parameter before using it
-    const { id } = await params;
+    // Resolving the params promise
+    const params = await props.params;
+    const id = params.id;
 
-    // Use the awaited id for the API call
     const product: Product | null = await getProduct(id);
 
-    // Si no se encuentra el producto, mostramos un mensaje amigable
-    // en lugar de llamar a notFound()
     if (!product) {
       return (
         <main className="container mx-auto px-4 py-12">

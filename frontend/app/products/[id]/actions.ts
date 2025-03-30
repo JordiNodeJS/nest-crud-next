@@ -2,7 +2,6 @@
 
 import { deleteProduct, updateProduct } from "../product.api";
 import { Product } from "@/types";
-import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 
 /**
