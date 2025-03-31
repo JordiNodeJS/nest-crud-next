@@ -1,9 +1,4 @@
----
-description: 
-globs: app/[a-zA-Z0-9-_]*/page\.(tsx|jsx),app/\([a-zA-Z0-9-_]*\)/,app/layout\.(tsx|jsx),components/ui/[A-Z][a-zA-Z]*\.(tsx|jsx),components/features/[A-Z][a-zA-Z]*\.(tsx|jsx),,components/layouts/[A-Z][a-zA-Z]*\.(tsx|jsx)
-alwaysApply: false
----
- # Reglas personalizadas para desarrollo con Next.js 15
+# Reglas personalizadas para desarrollo con Next.js 15
 
 Versión: 1.0.0
 

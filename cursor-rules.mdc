@@ -1,9 +1,4 @@
----
-description: 
-globs: 
-alwaysApply: false
----
- # Reglas de Codificación para Nest CRUD Next
+# Reglas de Codificación para Nest CRUD Next
 
 Este documento define las convenciones y mejores prácticas para el desarrollo con Cursor en este proyecto.
 
