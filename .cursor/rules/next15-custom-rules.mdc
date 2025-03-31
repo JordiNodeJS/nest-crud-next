@@ -1,0 +1,181 @@
+---
+description: 
+globs: app/[a-zA-Z0-9-_]*/page\.(tsx|jsx),app/\([a-zA-Z0-9-_]*\)/,app/layout\.(tsx|jsx),components/ui/[A-Z][a-zA-Z]*\.(tsx|jsx),components/features/[A-Z][a-zA-Z]*\.(tsx|jsx),,components/layouts/[A-Z][a-zA-Z]*\.(tsx|jsx)
+alwaysApply: false
+---
+ # Reglas personalizadas para desarrollo con Next.js 15
+
+Versión: 1.0.0
+
+## app-router-structure
+
+**Descripción**: Reglas para mantener una estructura organizada con App Router
+**Tipo**: always
+
+### Reglas
+
+- **Páginas en App Router**
+  - Patrón: `app/[a-zA-Z0-9-_]*/page\.(tsx|jsx)`
+  - Mensaje: Las páginas deben estar definidas como page.tsx dentro de carpetas de ruta en el directorio app/
+  - Severidad: warning
+
+- **Grupos de Rutas**
+  - Patrón: `app/\([a-zA-Z0-9-_]*\)/`
+  - Mensaje: Utilizar grupos de rutas (groupName) para organizar rutas sin afectar la estructura URL
+  - Severidad: suggestion
+
+- **Layout Raíz**
+  - Patrón: `app/layout\.(tsx|jsx)`
+  - Mensaje: Definir un layout raíz para toda la aplicación
+  - Severidad: error
+
+## component-organization
+
+**Descripción**: Reglas para organizar los componentes en directorios lógicos
+**Tipo**: auto_attached
+
+### Reglas
+
+- **Componentes UI**
+  - Patrón: `components/ui/[A-Z][a-zA-Z]*\.(tsx|jsx)`
+  - Mensaje: Componentes UI reutilizables deben estar en components/ui/
+  - Severidad: warning
+
+- **Componentes de Características**
+  - Patrón: `components/features/[A-Z][a-zA-Z]*\.(tsx|jsx)`
+  - Mensaje: Componentes específicos de características deben estar en components/features/
+  - Severidad: warning
+
+- **Componentes de Diseño**
+  - Patrón: `components/layouts/[A-Z][a-zA-Z]*\.(tsx|jsx)`
+  - Mensaje: Componentes de diseño deben estar en components/layouts/
+  - Severidad: warning
+
+## server-client-components
+
+**Descripción**: Reglas para el uso adecuado de Server y Client Components
+**Tipo**: auto_attached
+
+### Reglas
+
+- **'use client' Innecesario**
+  - Patrón: `'use client'`
+  - No con: `useState|useEffect|useRef|useCallback|useMemo|useContext|useReducer`
+  - Mensaje: Directiva 'use client' innecesaria si no se utilizan hooks o APIs exclusivas del navegador
+  - Severidad: warning
+
+- **Eventos sin 'use client'**
+  - Patrón: `onClick|onChange|onSubmit|addEventListener`
+  - No con: `'use client'`
+  - Mensaje: Los componentes con manejo de eventos deben usar la directiva 'use client'
+  - Severidad: error
+
+## type-imports
+
+**Descripción**: Reglas para importaciones de tipos de React
+**Tipo**: auto_attached
+
+### Reglas
+
+- **Importación de Tipos Correcta**
+  - Patrón: `import type \{ [a-zA-Z, ]* \} from 'react'`
+  - Mensaje: Correcto: Importación de tipos explícita usando 'import type'
+  - Severidad: suggestion
+  - Es positivo: true
+
+- **Evitar Namespace React**
+  - Patrón: `React\.[A-Z][a-zA-Z]*`
+  - Mensaje: Evitar usar el espacio de nombres React para tipos. Preferir importaciones nombradas
+  - Severidad: warning
+
+## data-fetching
+
+**Descripción**: Reglas para la obtención de datos en Next.js 15
+**Tipo**: auto_attached
+
+### Reglas
+
+- **Opciones de Caché con Tags**
+  - Patrón: `fetch\(.*\{\s*next:\s*\{\s*tags:\s*\[.*\]\s*\}\s*\}\)`
+  - Mensaje: Bien: Usando las opciones de caché con etiquetas en fetch
+  - Severidad: suggestion
+  - Es positivo: true
+
+- **Métodos de Revalidación**
+  - Patrón: `revalidatePath|revalidateTag`
+  - Mensaje: Bien: Utilizando métodos de revalidación para actualizaciones de datos
+  - Severidad: suggestion
+  - Es positivo: true
+
+- **Variables de Entorno en Cliente**
+  - Patrón: `env\.NEXT_PUBLIC_`
+  - Mensaje: Usar variables de entorno con prefijo NEXT_PUBLIC_ para valores accesibles en el cliente
+  - Severidad: warning
+
+## image-optimization
+
+**Descripción**: Reglas para la optimización de imágenes en Next.js 15
+**Tipo**: auto_attached
+
+### Reglas
+
+- **Usar Componente Image**
+  - Patrón: `<img`
+  - No con: `Image|next/image`
+  - Mensaje: Usar el componente Image de next/image en lugar de <img> para optimización automática
+  - Severidad: warning
+
+- **Atributo Sizes en Imágenes**
+  - Patrón: `<Image[^>]*sizes=`
+  - Mensaje: Bien: Definiendo el atributo sizes para imágenes responsivas
+  - Severidad: suggestion
+  - Es positivo: true
+
+## performance-optimization
+
+**Descripción**: Reglas para la optimización de rendimiento en Next.js 15
+**Tipo**: auto_attached
+
+### Reglas
+
+- **Importación Dinámica**
+  - Patrón: `import\(.*\)`
+  - Mensaje: Bien: Usando importación dinámica para code splitting
+  - Severidad: suggestion
+  - Es positivo: true
+
+- **Optimización de Fuentes**
+  - Patrón: `import\s*\{\s*.*\s*\}\s*from\s*'@next/font'`
+  - Mensaje: Usar next/font para optimización de fuentes y zero layout shift
+  - Severidad: warning
+
+- **Suspense para Streaming**
+  - Patrón: `<Suspense\s*fallback=`
+  - Mensaje: Bien: Usando Suspense para streaming y carga progresiva
+  - Severidad: suggestion
+  - Es positivo: true
+
+## accessibility
+
+**Descripción**: Reglas para garantizar la accesibilidad en aplicaciones Next.js
+**Tipo**: auto_attached
+
+### Reglas
+
+- **Divs con onClick Accesibles**
+  - Patrón: `<div\s*onClick=`
+  - No con: `role=|tabIndex=`
+  - Mensaje: Elementos div con onClick deben tener atributos role y tabIndex para accesibilidad
+  - Severidad: warning
+
+- **Alt en Imágenes**
+  - Patrón: `<img[^>]*>`
+  - No con: `alt=`
+  - Mensaje: Imágenes deben incluir atributo alt para accesibilidad
+  - Severidad: error
+
+- **Atributos ARIA**
+  - Patrón: `aria-`
+  - Mensaje: Bien: Usando atributos ARIA para mejorar la accesibilidad
+  - Severidad: suggestion
+  - Es positivo: true

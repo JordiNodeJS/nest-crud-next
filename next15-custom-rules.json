@@ -1,0 +1,189 @@
+{
+  "next15Rules": {
+    "version": "1.0.0",
+    "description": "Reglas personalizadas para desarrollo con Next.js 15",
+    "rules": [
+      {
+        "id": "app-router-structure",
+        "name": "Estructura de App Router",
+        "description": "Reglas para mantener una estructura organizada con App Router",
+        "type": "always",
+        "checks": [
+          {
+            "pattern": "app/[a-zA-Z0-9-_]*/page\\.(tsx|jsx)",
+            "message": "Las páginas deben estar definidas como page.tsx dentro de carpetas de ruta en el directorio app/",
+            "severity": "warning"
+          },
+          {
+            "pattern": "app/\\([a-zA-Z0-9-_]*\\)/",
+            "message": "Utilizar grupos de rutas (groupName) para organizar rutas sin afectar la estructura URL",
+            "severity": "suggestion"
+          },
+          {
+            "pattern": "app/layout\\.(tsx|jsx)",
+            "message": "Definir un layout raíz para toda la aplicación",
+            "severity": "error"
+          }
+        ]
+      },
+      {
+        "id": "component-organization",
+        "name": "Organización de Componentes",
+        "description": "Reglas para organizar los componentes en directorios lógicos",
+        "type": "auto_attached",
+        "checks": [
+          {
+            "pattern": "components/ui/[A-Z][a-zA-Z]*\\.(tsx|jsx)",
+            "message": "Componentes UI reutilizables deben estar en components/ui/",
+            "severity": "warning"
+          },
+          {
+            "pattern": "components/features/[A-Z][a-zA-Z]*\\.(tsx|jsx)",
+            "message": "Componentes específicos de características deben estar en components/features/",
+            "severity": "warning"
+          },
+          {
+            "pattern": "components/layouts/[A-Z][a-zA-Z]*\\.(tsx|jsx)",
+            "message": "Componentes de diseño deben estar en components/layouts/",
+            "severity": "warning"
+          }
+        ]
+      },
+      {
+        "id": "server-client-components",
+        "name": "Server vs. Client Components",
+        "description": "Reglas para el uso adecuado de Server y Client Components",
+        "type": "auto_attached",
+        "checks": [
+          {
+            "pattern": "'use client'",
+            "not_with": "useState|useEffect|useRef|useCallback|useMemo|useContext|useReducer",
+            "message": "Directiva 'use client' innecesaria si no se utilizan hooks o APIs exclusivas del navegador",
+            "severity": "warning"
+          },
+          {
+            "pattern": "onClick|onChange|onSubmit|addEventListener",
+            "not_with": "'use client'",
+            "message": "Los componentes con manejo de eventos deben usar la directiva 'use client'",
+            "severity": "error"
+          }
+        ]
+      },
+      {
+        "id": "type-imports",
+        "name": "Importaciones de Tipos",
+        "description": "Reglas para importaciones de tipos de React",
+        "type": "auto_attached",
+        "checks": [
+          {
+            "pattern": "import type \\{ [a-zA-Z, ]* \\} from 'react'",
+            "message": "Correcto: Importación de tipos explícita usando 'import type'",
+            "severity": "suggestion",
+            "is_positive": true
+          },
+          {
+            "pattern": "React\\.[A-Z][a-zA-Z]*",
+            "message": "Evitar usar el espacio de nombres React para tipos. Preferir importaciones nombradas",
+            "severity": "warning"
+          }
+        ]
+      },
+      {
+        "id": "data-fetching",
+        "name": "Obtención de Datos",
+        "description": "Reglas para la obtención de datos en Next.js 15",
+        "type": "auto_attached",
+        "checks": [
+          {
+            "pattern": "fetch\\(.*\\{\\s*next:\\s*\\{\\s*tags:\\s*\\[.*\\]\\s*\\}\\s*\\}\\)",
+            "message": "Bien: Usando las opciones de caché con etiquetas en fetch",
+            "severity": "suggestion",
+            "is_positive": true
+          },
+          {
+            "pattern": "revalidatePath|revalidateTag",
+            "message": "Bien: Utilizando métodos de revalidación para actualizaciones de datos",
+            "severity": "suggestion",
+            "is_positive": true
+          },
+          {
+            "pattern": "env\\.NEXT_PUBLIC_",
+            "message": "Usar variables de entorno con prefijo NEXT_PUBLIC_ para valores accesibles en el cliente",
+            "severity": "warning"
+          }
+        ]
+      },
+      {
+        "id": "image-optimization",
+        "name": "Optimización de Imágenes",
+        "description": "Reglas para la optimización de imágenes en Next.js 15",
+        "type": "auto_attached",
+        "checks": [
+          {
+            "pattern": "<img",
+            "not_with": "Image|next/image",
+            "message": "Usar el componente Image de next/image en lugar de <img> para optimización automática",
+            "severity": "warning"
+          },
+          {
+            "pattern": "<Image[^>]*sizes=",
+            "message": "Bien: Definiendo el atributo sizes para imágenes responsivas",
+            "severity": "suggestion",
+            "is_positive": true
+          }
+        ]
+      },
+      {
+        "id": "performance-optimization",
+        "name": "Optimización de Rendimiento",
+        "description": "Reglas para la optimización de rendimiento en Next.js 15",
+        "type": "auto_attached",
+        "checks": [
+          {
+            "pattern": "import\\(.*\\)",
+            "message": "Bien: Usando importación dinámica para code splitting",
+            "severity": "suggestion",
+            "is_positive": true
+          },
+          {
+            "pattern": "import\\s*\\{\\s*.*\\s*\\}\\s*from\\s*'@next/font'",
+            "message": "Usar next/font para optimización de fuentes y zero layout shift",
+            "severity": "warning"
+          },
+          {
+            "pattern": "<Suspense\\s*fallback=",
+            "message": "Bien: Usando Suspense para streaming y carga progresiva",
+            "severity": "suggestion",
+            "is_positive": true
+          }
+        ]
+      },
+      {
+        "id": "accessibility",
+        "name": "Accesibilidad",
+        "description": "Reglas para garantizar la accesibilidad en aplicaciones Next.js",
+        "type": "auto_attached",
+        "checks": [
+          {
+            "pattern": "<div\\s*onClick=",
+            "not_with": "role=|tabIndex=",
+            "message": "Elementos div con onClick deben tener atributos role y tabIndex para accesibilidad",
+            "severity": "warning"
+          },
+          {
+            "pattern": "<img[^>]*>",
+            "not_with": "alt=",
+            "message": "Imágenes deben incluir atributo alt para accesibilidad",
+            "severity": "error"
+          },
+          {
+            "pattern": "aria-",
+            "message": "Bien: Usando atributos ARIA para mejorar la accesibilidad",
+            "severity": "suggestion",
+            "is_positive": true
+          }
+        ]
+      }
+    ]
+  }
+} 

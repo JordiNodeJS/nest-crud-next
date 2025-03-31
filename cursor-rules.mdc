@@ -1,0 +1,101 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+ # Reglas de Codificación para Nest CRUD Next
+
+Este documento define las convenciones y mejores prácticas para el desarrollo con Cursor en este proyecto.
+
+## Backend (NestJS)
+
+### Estructura del Código
+
+- **Estructura Modular**
+  - Agrupar funcionalidad en módulos de características
+  - Cada módulo debe encapsular componentes relacionados (controllers, services, entities)
+  - Mantener el `app.module.ts` limpio delegando a módulos de características
+
+- **Convenciones de Nombres**
+  - Archivos deben seguir el patrón: `nombre.tipo.ts` (ej: `user.controller.ts`, `user.service.ts`)
+  - Nombres de clases deben ser descriptivos y seguir PascalCase (ej: `UserController`)
+  - Métodos y propiedades deben usar camelCase
+
+### Diseño de API
+
+- **Controllers**
+  - Mantener los controllers enfocados en el manejo de solicitudes y definición de rutas
+  - Delegar lógica de negocio a servicios
+  - Usar métodos HTTP apropiados (GET, POST, PUT, DELETE)
+  - Implementar códigos de estado de respuesta adecuados
+
+- **DTOs**
+  - Crear DTOs separados para diferentes operaciones (create, update, response)
+  - Usar decoradores de class-validator para validación
+  - Implementar class-transformer para serialización/deserialización
+
+- **Manejo de Errores**
+  - Crear filtros de excepción personalizados para respuestas de error consistentes
+  - Usar excepciones integradas de NestJS (NotFoundException, UnauthorizedException, etc.)
+  - Registrar errores apropiadamente con información de contexto
+
+### Prácticas de Base de Datos
+
+- **Entidades**
+  - Definir relaciones claras entre entidades
+  - Usar decoradores de Prisma apropiadamente
+  - Implementar indexación adecuada para rendimiento
+
+- **Patrón Repositorio**
+  - Usar el patrón repositorio para operaciones de base de datos
+  - Crear métodos de repositorio personalizados para consultas complejas
+
+## Frontend (Next.js 15)
+
+### Estructura del Proyecto
+
+- **App Router**
+  - Usar App Router para nuevas características
+  - Organizar rutas en el directorio `app/`
+  - Aprovechar layouts anidados para UI compartida entre rutas
+  - Usar grupos de rutas `(nombreGrupo)` para organizar rutas sin afectar la estructura de URL
+
+- **Organización de Componentes**
+  - Separar componentes en directorios lógicos:
+    - `components/ui/` - Componentes UI reutilizables
+    - `components/features/` - Componentes específicos de características
+    - `components/layouts/` - Componentes de diseño
+
+### Server Components vs. Client Components
+
+- Preferir Server Components por defecto
+- Usar la directiva `"use client"` solo cuando sea necesario:
+  - Cuando se usan hooks
+  - Cuando se usan APIs exclusivas del navegador
+  - Cuando se usan event listeners
+
+### Importaciones de Tipos
+
+- Siempre usar importaciones de tipo explícitas y nombradas de React
+- Importar tipos usando la sintaxis `import type` para mejorar el tree-shaking
+- Evitar usar el espacio de nombres React (React.X) para tipos
+
+### Obtención de Datos
+
+- Usar React Server Components para obtención de datos
+- Implementar estrategias de caché usando `cache()`, `revalidatePath()`, y `revalidateTag()`
+- Considerar SWR o React Query para gestión de datos del lado del cliente
+
+### Optimización de Rendimiento
+
+- Usar `next/image` para optimización automática de imágenes
+- Implementar imágenes responsivas con tamaños apropiados
+- Minimizar JavaScript del lado del cliente
+- Implementar code splitting usando importaciones dinámicas
+- Usar `next/font` para carga de fuentes optimizada y zero layout shift
+
+### Gestión de Estado
+
+- Para estado simple: Usar React Context o useState
+- Para estado complejo: Considerar Zustand, Jotai, o Redux Toolkit
+- Mantener el estado lo más cerca posible de los componentes que lo usan
